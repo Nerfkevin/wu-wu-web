@@ -1,5 +1,7 @@
 import type { LucideIcon } from "lucide-react";
 import { Sparkles } from "lucide-react";
+import { MarketingHeader } from "@/components/home/MarketingHeader";
+import { MobileFooterNav } from "@/components/site/MobileFooterNav";
 import { SiteFooter } from "@/components/site/SiteFooter";
 
 export function LegalShell({
@@ -43,7 +45,9 @@ export function LegalShell({
         <Sparkles className="h-5 w-5" aria-hidden />
       </div>
 
-      <main className="relative z-10 flex-1 px-4 py-12 sm:py-16">
+      <MarketingHeader />
+
+      <main className="relative z-10 flex-1 px-4 py-8 sm:py-12">
         <article className="mx-auto max-w-2xl rounded-2xl border border-white/10 bg-zinc-900/85 p-8 shadow-2xl shadow-violet-950/40 backdrop-blur-sm sm:p-10">
           <div className="mb-8 text-center">
             <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-violet-600/30 to-fuchsia-600/20 ring-1 ring-white/10">
@@ -61,6 +65,8 @@ export function LegalShell({
           <div className="legal-prose text-zinc-300">{children}</div>
         </article>
       </main>
+
+      <MobileFooterNav />
 
       <SiteFooter />
     </div>

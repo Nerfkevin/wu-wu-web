@@ -10,8 +10,9 @@ const nunito = Nunito({
 
 export const metadata: Metadata = {
   title: "Wu-Wu",
-  description: "Wu-Wu — wu-wu.com",
+  description: "Wu-Wu — download on the App Store. wu-wu.com",
   metadataBase: new URL("https://wu-wu.com"),
+  appleWebApp: { capable: true },
 };
 
 export default function RootLayout({
