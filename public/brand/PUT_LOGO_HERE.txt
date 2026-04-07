@@ -1,0 +1,5 @@
+Place your logo here as:
+
+  logo.png   (transparent PNG works well)
+
+Loaded from /brand/logo.png on wu-wu.com

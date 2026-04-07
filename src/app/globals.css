@@ -1,0 +1,61 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 260 32% 6%;
+    --foreground: 270 20% 96%;
+    --card: 260 25% 10%;
+    --card-foreground: 270 15% 95%;
+    --primary: 270 75% 68%;
+    --primary-foreground: 260 40% 8%;
+    --secondary: 270 20% 16%;
+    --secondary-foreground: 270 15% 92%;
+    --muted: 260 15% 18%;
+    --muted-foreground: 265 12% 65%;
+    --accent: 280 60% 45%;
+    --accent-foreground: 270 20% 98%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 265 20% 18%;
+    --input: 265 20% 18%;
+    --ring: 280 75% 60%;
+    --radius: 0.5rem;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    color-scheme: dark;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+}
+
+@layer components {
+  .legal-prose h2 {
+    @apply mb-2 mt-8 text-lg font-semibold text-zinc-100 first:mt-0;
+  }
+
+  .legal-prose h3 {
+    @apply mb-2 mt-4 text-base font-semibold text-zinc-200;
+  }
+
+  .legal-prose p {
+    @apply mb-3 leading-relaxed text-zinc-300;
+  }
+
+  .legal-prose ul {
+    @apply mb-3 list-disc space-y-2 pl-6 text-zinc-300;
+  }
+
+  .legal-prose a {
+    @apply text-violet-400 underline decoration-violet-500/40 underline-offset-2 transition-colors hover:text-fuchsia-300;
+  }
+
+  .legal-prose strong {
+    @apply font-semibold text-zinc-200;
+  }
+}
