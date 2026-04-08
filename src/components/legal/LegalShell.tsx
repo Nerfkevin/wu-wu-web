@@ -53,7 +53,7 @@ export function LegalShell({
             <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-violet-600/30 to-fuchsia-600/20 ring-1 ring-white/10">
               <Icon className="h-8 w-8 text-violet-300" aria-hidden />
             </div>
-            <h1 className="bg-gradient-to-r from-violet-300 via-fuchsia-300 to-purple-300 bg-clip-text text-3xl font-bold text-transparent">
+            <h1 className="font-instrument-serif bg-gradient-to-r from-violet-300 via-fuchsia-300 to-purple-300 bg-clip-text text-3xl font-normal text-transparent">
               {title}
             </h1>
             {effectiveDate ? (

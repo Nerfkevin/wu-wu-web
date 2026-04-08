@@ -3,7 +3,7 @@ import { Shield } from "lucide-react";
 import { LegalShell } from "@/components/legal/LegalShell";
 
 const SITE = "https://wu-wu.com";
-const CONTACT = "hello@wu-wu.com";
+const CONTACT = "hello@98goats.com";
 
 export const metadata: Metadata = {
   title: "Privacy Policy | Wu-Wu",

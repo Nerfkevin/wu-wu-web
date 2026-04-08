@@ -7,7 +7,7 @@ export function HomeHero() {
         <p className="mb-3 text-sm font-medium uppercase tracking-widest text-violet-400/90">
           Now on iOS
         </p>
-        <h1 className="text-balance text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
+        <h1 className="font-instrument-serif text-balance text-4xl font-normal tracking-tight sm:text-5xl md:text-6xl">
           <span className="bg-gradient-to-r from-violet-200 via-fuchsia-200 to-purple-200 bg-clip-text text-transparent">
             Wu-Wu
           </span>

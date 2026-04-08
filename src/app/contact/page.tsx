@@ -3,7 +3,7 @@ import { Mail } from "lucide-react";
 import { LegalShell } from "@/components/legal/LegalShell";
 
 const SITE = "https://wu-wu.com";
-const EMAIL = "hello@wu-wu.com";
+const EMAIL = "hello@98goats.com";
 
 export const metadata: Metadata = {
   title: "Contact | Wu-Wu",

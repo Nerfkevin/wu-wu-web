@@ -1,10 +1,18 @@
 import type { Metadata } from "next";
-import { Nunito } from "next/font/google";
+import { Instrument_Serif, Space_Mono } from "next/font/google";
 import "./globals.css";
 
-const nunito = Nunito({
+const instrumentSerif = Instrument_Serif({
   subsets: ["latin"],
-  variable: "--font-nunito",
+  weight: "400",
+  variable: "--font-instrument-serif",
+  display: "swap",
+});
+
+const spaceMono = Space_Mono({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  variable: "--font-space-mono",
   display: "swap",
 });
 
@@ -23,7 +31,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${nunito.variable} min-h-screen bg-zinc-950 font-nunito text-zinc-100`}
+        className={`${instrumentSerif.variable} ${spaceMono.variable} min-h-screen bg-zinc-950 font-space-mono text-zinc-100`}
       >
         {children}
       </body>

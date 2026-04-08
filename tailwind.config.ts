@@ -16,7 +16,13 @@ export default {
     },
     extend: {
       fontFamily: {
-        nunito: ["var(--font-nunito)", "sans-serif"],
+        "space-mono": ["var(--font-space-mono)", "ui-monospace", "monospace"],
+        "instrument-serif": [
+          "var(--font-instrument-serif)",
+          "ui-serif",
+          "Georgia",
+          "serif",
+        ],
       },
       colors: {
         border: "hsl(var(--border))",
