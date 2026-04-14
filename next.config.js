@@ -1,6 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  async rewrites() {
+    return [
+      { source: "/favicon.ico", destination: "/brand/favicon.ico" },
+    ];
+  },
   async redirects() {
     return [
       { source: "/wuwu/privacy", destination: "/privacy", permanent: true },

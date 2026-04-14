@@ -20,6 +20,9 @@ export const metadata: Metadata = {
   title: "Wu-Wu",
   description: "Wu-Wu — download on the App Store. wu-wu.com",
   metadataBase: new URL("https://wu-wu.com"),
+  icons: {
+    icon: "/brand/favicon.ico",
+  },
   appleWebApp: { capable: true },
 };
 
