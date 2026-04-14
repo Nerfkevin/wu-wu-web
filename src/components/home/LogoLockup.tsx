@@ -24,7 +24,7 @@ export function LogoLockup({ className }: { className?: string }) {
           unoptimized
         />
       ) : null}
-      <span className="font-instrument-serif bg-gradient-to-r from-violet-300 to-fuchsia-300 bg-clip-text text-lg font-normal tracking-tight text-transparent sm:text-xl">
+      <span className="font-instrument-serif text-xl font-normal tracking-tight text-white sm:text-2xl">
         Wu-Wu
       </span>
     </Link>

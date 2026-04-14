@@ -34,6 +34,19 @@
   }
 }
 
+@keyframes img-wobble {
+  0%   { transform: rotate(0deg) translate(0px, 0px); }
+  20%  { transform: rotate(2deg) translate(1px, -1px); }
+  40%  { transform: rotate(-1.5deg) translate(-1px, 1px); }
+  60%  { transform: rotate(1deg) translate(1px, 0px); }
+  80%  { transform: rotate(-2deg) translate(-1px, -1px); }
+  100% { transform: rotate(0deg) translate(0px, 0px); }
+}
+
+.hover-wobble:hover {
+  animation: img-wobble 0.55s ease-in-out infinite;
+}
+
 @layer components {
   .legal-prose h2 {
     @apply mb-2 mt-8 text-lg font-semibold text-zinc-100 first:mt-0;
