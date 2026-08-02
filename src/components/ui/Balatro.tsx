@@ -157,6 +157,9 @@ export default function Balatro({
     }
     window.addEventListener("resize", resize);
     resize();
+    const ro = new ResizeObserver(() => resize());
+    ro.observe(container);
+    requestAnimationFrame(() => resize());
 
     const geometry = new Triangle(gl);
     program = new Program(gl, {
@@ -204,6 +207,7 @@ export default function Balatro({
     window.addEventListener("mousemove", handleMouseMove);
 
     return () => {
+      ro.disconnect();
       cancelAnimationFrame(animationFrameId);
       window.removeEventListener("resize", resize);
       window.removeEventListener("mousemove", handleMouseMove);

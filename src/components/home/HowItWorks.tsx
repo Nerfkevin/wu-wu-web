@@ -33,6 +33,14 @@ const steps = [
   },
 ];
 
+/** max-sm: gentle left→right drift; sm+: centered */
+const imageRowClass: string[] = [
+  "flex h-36 w-full flex-shrink-0 items-center justify-center max-sm:justify-start max-sm:pl-8 lg:justify-center",
+  "flex h-36 w-full flex-shrink-0 items-center justify-center max-sm:justify-start max-sm:pl-20 lg:justify-center",
+  "flex h-36 w-full flex-shrink-0 items-center justify-center max-sm:justify-end max-sm:pr-20 lg:justify-center",
+  "flex h-36 w-full flex-shrink-0 items-center justify-center max-sm:justify-end max-sm:pr-8 lg:justify-center",
+];
+
 export function HowItWorks() {
   return (
     <section className="relative overflow-hidden bg-[#6B2AAE] py-16">
@@ -57,19 +65,19 @@ export function HowItWorks() {
 
       <div className="relative z-10 mx-auto max-w-6xl px-4">
         {/* Section label */}
-        <p className="mb-12 text-center text-xs font-semibold uppercase tracking-[0.3em] text-white/60">
+        <p className="mb-8 text-center text-xs font-semibold uppercase tracking-[0.3em] text-white/60">
           WHAT IS THIS
         </p>
 
         {/* 4-column grid */}
-        <div className="grid grid-cols-1 gap-14 sm:grid-cols-2 sm:gap-12 lg:grid-cols-4 lg:gap-10">
-          {steps.map((step) => (
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 sm:gap-8 lg:grid-cols-4 lg:gap-8">
+          {steps.map((step, index) => (
             <div
               key={step.id}
-              className="flex flex-col items-center gap-6 text-center"
+              className="flex flex-col gap-3 text-left max-lg:items-stretch lg:items-center lg:text-center"
             >
               {/* Fixed-height slot so copy lines up across columns */}
-              <div className="flex h-48 w-full flex-shrink-0 items-center justify-center">
+              <div className={imageRowClass[index]}>
                 <div
                   className={`hover-wobble relative cursor-default ${step.imageBoxClass}`}
                 >
@@ -83,7 +91,7 @@ export function HowItWorks() {
               </div>
 
               {/* Text */}
-              <p className="font-instrument-serif text-xl leading-relaxed text-white">
+              <p className="font-instrument-serif text-left text-xl leading-relaxed text-white lg:text-center">
                 {step.text && <span>{step.text}</span>}
                 {step.boldText && (
                   <span className="font-bold text-white">{step.boldText}</span>
