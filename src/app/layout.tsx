@@ -24,6 +24,10 @@ export const metadata: Metadata = {
     icon: "/brand/favicon.ico",
   },
   appleWebApp: { capable: true },
+  // Safari Smart App Banner → “View” opens App Store
+  other: {
+    "apple-itunes-app": "app-id=6760009072",
+  },
 };
 
 export default function RootLayout({
