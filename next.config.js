@@ -1,8 +1,21 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  skipTrailingSlashRedirect: true,
   async rewrites() {
     return [
+      {
+        source: "/wu-relay/static/:path*",
+        destination: "https://us-assets.i.posthog.com/static/:path*",
+      },
+      {
+        source: "/wu-relay/array/:path*",
+        destination: "https://us-assets.i.posthog.com/array/:path*",
+      },
+      {
+        source: "/wu-relay/:path*",
+        destination: "https://us.i.posthog.com/:path*",
+      },
       { source: "/favicon.ico", destination: "/brand/favicon.ico" },
     ];
   },

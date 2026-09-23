@@ -1,0 +1,744 @@
+.itsyunmei-root {
+  color-scheme: light;
+  min-height: 100svh;
+  background: linear-gradient(180deg, #faf6ff 0%, #ead9fc 100%);
+  color: #191126;
+  font-family: var(--font-itsyunmei), ui-sans-serif, system-ui, sans-serif;
+}
+
+.iy-page {
+  display: flex;
+  min-height: 100svh;
+  flex-direction: column;
+  align-items: center;
+  padding-top: max(0.75rem, env(safe-area-inset-top));
+  padding-right: max(1rem, env(safe-area-inset-right));
+  padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
+  padding-left: max(1rem, env(safe-area-inset-left));
+}
+
+@media (min-width: 390px) {
+  .iy-page {
+    padding-right: max(1.25rem, env(safe-area-inset-right));
+    padding-left: max(1.25rem, env(safe-area-inset-left));
+  }
+
+.iy-main {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+}
+
+.iy-screen {
+  display: flex;
+  min-height: calc(100svh - 2.5rem);
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.iy-btn {
+  display: inline-flex;
+  min-height: 48px;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #b249f8 0%, #8115e5 100%);
+  padding: 0.75rem 1.25rem;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #fff;
+  cursor: pointer;
+  touch-action: manipulation;
+  box-shadow: 0 10px 24px rgba(129, 21, 229, 0.28);
+  transition: filter 160ms ease, transform 160ms ease;
+}
+
+.iy-btn:hover {
+  filter: brightness(1.04);
+}
+
+.iy-btn:active {
+  transform: scale(0.98);
+}
+
+.iy-btn:focus-visible,
+.iy-text-btn:focus-visible,
+.iy-icon-btn:focus-visible,
+.iy-card-btn:focus-visible {
+  outline: 2px solid #9428ff;
+  outline-offset: 3px;
+}
+
+.iy-btn[aria-disabled="true"] {
+  cursor: not-allowed;
+  opacity: 0.5;
+  pointer-events: none;
+  box-shadow: none;
+}
+
+.iy-text-btn {
+  min-height: 48px;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  color: #62566f;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 3px;
+}
+
+.iy-text-btn:hover {
+  text-decoration-color: #62566f;
+}
+
+.iy-spread {
+  display: flex;
+  width: 100%;
+  max-width: 440px;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 8px;
+  margin-inline: auto;
+  overflow: visible;
+  padding-block: 10px;
+}
+
+@media (min-width: 768px) {
+  .iy-spread {
+    gap: 12px;
+  }
+}
+
+.iy-card-btn {
+  position: relative;
+  flex: 0 0 calc((100% - 24px) / 4);
+  width: calc((100% - 24px) / 4);
+  aspect-ratio: 2 / 3;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  perspective: 1000px;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 180ms ease, opacity 280ms ease, filter 280ms ease;
+}
+
+@media (min-width: 768px) {
+  .iy-card-btn {
+    flex-basis: calc((100% - 36px) / 4);
+    width: calc((100% - 36px) / 4);
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .iy-card-btn:hover:not(.is-revealed):not(.is-muted) {
+    transform: translateY(-4px);
+  }
+}
+
+.iy-card-btn:active:not(.is-revealed) {
+  transform: scale(0.97);
+}
+
+.iy-card-btn.is-revealed {
+  z-index: 2;
+  transform: scale(1.18);
+}
+
+.iy-card-btn.is-muted {
+  opacity: 0.9;
+  filter: blur(1.5px);
+  pointer-events: none;
+}
+
+.iy-card-btn.is-muted .iy-card-back {
+  background: linear-gradient(165deg, #efe3ff 0%, #d7b8ff 100%);
+  border-color: #e0ccff;
+  box-shadow: 0 8px 18px rgba(148, 40, 255, 0.12);
+}
+
+.iy-card-inner {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  transform: rotateY(0deg);
+  transition: transform 600ms cubic-bezier(0.4, 0.2, 0.2, 1);
+}
+
+.iy-card-btn.is-flipped .iy-card-inner {
+  transform: rotateY(180deg);
+}
+
+.iy-card-face {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 10px;
+  border: 1px solid #e0ccff;
+  background: #fff;
+  box-shadow: 0 8px 18px rgba(148, 40, 255, 0.12);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.iy-card-face img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.iy-card-back {
+  background: linear-gradient(180deg, #7c3aed 0%, #5b21b6 48%, #3b0764 100%);
+  border-color: rgba(255, 255, 255, 0.22);
+  box-shadow: 0 10px 20px rgba(59, 7, 100, 0.32);
+  transform: rotateY(0deg);
+  -webkit-transform: rotateY(0deg);
+}
+
+.iy-card-front {
+  background: #fbf6ec;
+  transform: rotateY(180deg);
+  -webkit-transform: rotateY(180deg);
+}
+
+.iy-card-btn.is-revealed .iy-card-front {
+  box-shadow:
+    0 0 0 2px rgba(148, 40, 255, 0.55),
+    0 10px 22px rgba(148, 40, 255, 0.28);
+}
+
+.iy-card-placeholder {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  padding: 0.35rem;
+  text-align: center;
+}
+
+.iy-card-placeholder-title {
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #5b1aa8;
+}
+
+.iy-modal-root {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  padding-top: max(12px, env(safe-area-inset-top));
+  padding-bottom: max(12px, env(safe-area-inset-bottom));
+}
+
+.iy-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(18, 8, 32, 0.48);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  animation: iy-fade-in 220ms ease;
+}
+
+.iy-connecting {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.15rem;
+  animation: iy-fade-in 220ms ease;
+}
+
+.iy-connecting-spin {
+  width: 42px;
+  height: 42px;
+  border: 3px solid rgba(255, 255, 255, 0.28);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: iy-spin 0.75s linear infinite;
+}
+
+.iy-connecting-label {
+  margin: 0;
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #fff;
+  text-shadow: 0 1px 10px rgba(18, 8, 32, 0.45);
+}
+
+@keyframes iy-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.iy-modal-panel {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  width: 100%;
+  max-width: 420px;
+  max-height: min(100svh - 24px, 680px);
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 24px;
+  border: 2px solid #9428ff;
+  background: #fff;
+  padding: 1rem 0.9rem 0.85rem;
+  box-shadow: 0 24px 50px rgba(82, 20, 150, 0.22);
+  animation: iy-modal-in 280ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.iy-modal-panel .iy-modal-cta {
+  min-height: 44px;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  gap: 0.35rem;
+  overflow: hidden;
+  padding: 0.55rem 0.85rem;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.iy-modal-cta-star {
+  flex: 0 0 auto;
+  font-size: 0.85rem;
+  line-height: 1;
+}
+
+.iy-modal-cta-label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (min-width: 640px) {
+  .iy-modal-root {
+    padding: 20px;
+    padding-top: max(20px, env(safe-area-inset-top));
+    padding-bottom: max(20px, env(safe-area-inset-bottom));
+  }
+
+  .iy-modal-panel {
+    border-radius: 28px;
+    padding: 1.35rem 1.15rem 1.15rem;
+  }
+
+  .iy-modal-panel .iy-modal-cta {
+    min-height: 48px;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    font-size: 0.875rem;
+  }
+
+  .iy-modal-cta-star {
+    font-size: 1rem;
+  }
+}
+
+.iy-tap-hint {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+}
+
+.iy-tap-finger {
+  display: inline-block;
+  font-size: 1.15rem;
+  line-height: 1;
+}
+
+.iy-tap-hint.is-animated {
+  animation: iy-point-bounce 1.15s ease-in-out infinite;
+}
+
+@keyframes iy-point-bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(7px);
+  }
+}
+
+.iy-icon-btn {
+  position: absolute;
+  top: 0.65rem;
+  right: 0.65rem;
+  display: inline-flex;
+  height: 44px;
+  width: 44px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  color: #62566f;
+}
+
+.iy-player {
+  position: relative;
+  overflow: hidden;
+  margin-inline: auto;
+  border-radius: 18px;
+  border: 1px solid #e0ccff;
+  background: linear-gradient(180deg, #efe6ff 0%, #dcc6fb 100%);
+  box-shadow: 0 16px 36px rgba(129, 21, 229, 0.16);
+}
+
+.iy-player video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #1a1024;
+  cursor: pointer;
+}
+
+.iy-player-placeholder,
+.iy-player-error,
+.iy-resume {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 1.25rem;
+  text-align: center;
+}
+
+.iy-player-chrome {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+}
+
+.iy-play-btn {
+  pointer-events: none;
+  position: absolute;
+  left: 10px;
+  bottom: 16px;
+  z-index: 2;
+  display: flex;
+  height: 32px;
+  width: 32px;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 8px;
+  background: rgba(18, 12, 10, 0.72);
+  color: #fff;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 160ms ease;
+}
+
+.iy-play-btn:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .iy-player:hover .iy-play-btn {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .iy-play-btn.is-paused {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+.iy-timeline {
+  pointer-events: auto;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  height: 10px;
+  cursor: pointer;
+  background: rgba(0, 0, 0, 0.28);
+}
+
+.iy-timeline-fill {
+  height: 100%;
+  background: #f08a12;
+}
+
+.iy-resume {
+  background: #f08a12;
+  padding: 1.5rem 1.25rem;
+}
+
+.iy-resume-title {
+  max-width: 16ch;
+  font-size: 1.2rem;
+  font-weight: 700;
+  line-height: 1.3;
+  color: #fff;
+}
+
+.iy-resume-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.85rem;
+  margin-top: 1.25rem;
+}
+
+.iy-resume-choice {
+  display: flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 0.75rem;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  font-size: 1rem;
+  font-weight: 650;
+  color: #fff;
+  cursor: pointer;
+}
+
+.iy-resume-choice:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 4px;
+  border-radius: 8px;
+}
+
+.iy-resume-icon {
+  display: flex;
+  height: 36px;
+  width: 36px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #fff;
+  border-radius: 999px;
+}
+
+.iy-offer-slot {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  margin-top: 1.1rem;
+  animation: iy-offer-in 450ms ease both;
+}
+
+.iy-cta-pill {
+  display: inline-flex;
+  min-height: 52px;
+  width: min(100%, 360px);
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #7be36f 0%, #22c55e 52%, #15803d 100%);
+  padding: 0.85rem 1.5rem;
+  font-family: var(--font-itsyunmei), ui-sans-serif, system-ui, sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1.2;
+  color: #fff;
+  text-align: center;
+  text-decoration: none;
+  text-transform: none;
+  cursor: pointer;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.45),
+    inset 0 -2px 0 rgba(21, 128, 61, 0.45),
+    0 6px 0 #166534,
+    0 12px 22px rgba(22, 101, 52, 0.32);
+  animation: iy-cta-pulse 1.7s ease-in-out infinite;
+  touch-action: manipulation;
+}
+
+.iy-cta-pill:hover {
+  filter: brightness(1.05);
+}
+
+.iy-cta-pill:active {
+  transform: translateY(3px) scale(0.99);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.45),
+    inset 0 -1px 0 rgba(21, 128, 61, 0.45),
+    0 3px 0 #166534,
+    0 8px 16px rgba(22, 101, 52, 0.28);
+  animation: none;
+}
+
+.iy-cta-pill[aria-disabled="true"] {
+  cursor: not-allowed;
+  opacity: 0.5;
+  pointer-events: none;
+  animation: none;
+  box-shadow: none;
+}
+
+.iy-cta-pill:focus-visible {
+  outline: 2px solid #166534;
+  outline-offset: 4px;
+}
+
+@keyframes iy-cta-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.045);
+  }
+}
+
+.iy-end-panel {
+  align-items: center;
+  text-align: center;
+  padding-bottom: 1rem;
+}
+
+.iy-end-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  line-height: 1.2;
+  color: #191126;
+}
+
+.iy-end-body {
+  margin-top: 0.65rem;
+  max-width: 34ch;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: #62566f;
+}
+
+.iy-end-cta {
+  margin-top: 1.25rem;
+  width: 100%;
+}
+
+.iy-end-dismiss {
+  margin-top: 0.35rem;
+}
+
+.iy-offer {
+  width: 100%;
+  max-width: 760px;
+  animation: iy-offer-in 450ms ease both;
+}
+
+@keyframes iy-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes iy-modal-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes iy-offer-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .iy-card-btn,
+  .iy-card-inner,
+  .iy-btn,
+  .iy-cta-pill,
+  .iy-offer,
+  .iy-offer-slot,
+  .iy-tap-hint,
+  .iy-connecting-spin {
+    transition: none !important;
+    animation: none !important;
+    transform: none !important;
+  }
+
+  .iy-card-btn:hover,
+  .iy-card-btn:active {
+    transform: none !important;
+  }
+
+  .iy-card-btn.is-revealed {
+    transform: scale(1.18) !important;
+  }
+
+  .iy-card-inner {
+    transform-style: flat;
+    -webkit-transform-style: flat;
+  }
+
+  .iy-card-face {
+    backface-visibility: visible;
+    -webkit-backface-visibility: visible;
+    transform: none !important;
+    -webkit-transform: none !important;
+  }
+
+  .iy-card-btn:not(.is-flipped) .iy-card-front {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .iy-card-btn.is-flipped .iy-card-back {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .iy-modal-backdrop,
+  .iy-modal-panel {
+    animation: iy-fade-in 120ms ease;
+  }
+}

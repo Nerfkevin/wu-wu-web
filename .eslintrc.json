@@ -1,4 +1,4 @@
 {
   "extends": "next/core-web-vitals",
-  "ignorePatterns": ["node_modules/", "pett-web/", ".next/"]
+  "ignorePatterns": ["node_modules/", "pett-web/", "67time-web/", ".next/"]
 }
