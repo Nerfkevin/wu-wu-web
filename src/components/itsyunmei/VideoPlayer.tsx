@@ -1,7 +1,14 @@
 "use client";
 
 import { Pause, Play, RotateCcw, Sparkles } from "lucide-react";
-import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  forwardRef,
+  useCallback,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from "react";
 import { trackFunnelEvent } from "@/lib/itsyunmei/analytics";
 import {
   MEANINGFUL_PROGRESS_SECONDS,
@@ -12,7 +19,6 @@ import {
 import {
   getPlayerWrapStyle,
   linearToTimeline,
-  timelineToLinear,
 } from "@/lib/itsyunmei/media";
 import {
   clampProgress,
@@ -24,18 +30,24 @@ import {
 
 const copy = itsYunmeiConfig.copy.video;
 
-export function VideoPlayer({
-  onPlayback,
-  onEnded,
-}: {
-  onPlayback: (currentTime: number, duration: number, ended: boolean) => void;
-  onEnded: () => void;
-}) {
+export type VideoPlayerHandle = {
+  tryPlay: () => void;
+  pause: () => void;
+};
+
+export const VideoPlayer = forwardRef<
+  VideoPlayerHandle,
+  {
+    active: boolean;
+    onPlayback: (currentTime: number, duration: number, ended: boolean) => void;
+    onEnded: () => void;
+  }
+>(function VideoPlayer({ active, onPlayback, onEnded }, ref) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const lastSaveRef = useRef(0);
   const startedRef = useRef(false);
   const failedRef = useRef(false);
-  const seekingRef = useRef(false);
+  const showResumeRef = useRef(false);
   const [error, setError] = useState<string | null>(null);
   const [showResume, setShowResume] = useState(false);
   const [resumeTo, setResumeTo] = useState(0);
@@ -55,6 +67,8 @@ export function VideoPlayer({
     ? itsYunmeiConfig.captionsSrc.trim()
     : null;
   const version = itsYunmeiConfig.videoVersion;
+
+  showResumeRef.current = showResume;
 
   const saveProgress = useCallback(
     (seconds: number) => {
@@ -86,26 +100,55 @@ export function VideoPlayer({
     };
   }, [saveProgress, src]);
 
-  const considerResume = (videoDuration: number) => {
+  const considerResume = useCallback(
+    (videoDuration: number) => {
+      const video = videoRef.current;
+      if (video && !video.paused) return false;
+      const saved = readVideoProgress(version);
+      const clamped = clampProgress(saved, videoDuration);
+      if (
+        isMeaningfulUnfinishedProgress(
+          clamped,
+          videoDuration,
+          MEANINGFUL_PROGRESS_SECONDS,
+        )
+      ) {
+        video?.pause();
+        setResumeTo(clamped);
+        setShowResume(true);
+        return true;
+      }
+      setShowResume(false);
+      return false;
+    },
+    [version],
+  );
+
+  const tryPlay = useCallback(() => {
     const video = videoRef.current;
-    if (video && !video.paused) return false;
-    const saved = readVideoProgress(version);
-    const clamped = clampProgress(saved, videoDuration);
-    if (
-      isMeaningfulUnfinishedProgress(
-        clamped,
-        videoDuration,
-        MEANINGFUL_PROGRESS_SECONDS,
-      )
-    ) {
-      video?.pause();
-      setResumeTo(clamped);
-      setShowResume(true);
-      return true;
+    if (!video || showResumeRef.current) return;
+    if (considerResume(video.duration)) return;
+    video.play().catch(() => {});
+  }, [considerResume]);
+
+  useImperativeHandle(
+    ref,
+    () => ({
+      tryPlay,
+      pause: () => {
+        videoRef.current?.pause();
+      },
+    }),
+    [tryPlay],
+  );
+
+  useEffect(() => {
+    if (!active) {
+      videoRef.current?.pause();
+      return;
     }
-    setShowResume(false);
-    return false;
-  };
+    tryPlay();
+  }, [active, tryPlay]);
 
   const seekTo = (seconds: number, play: boolean) => {
     const video = videoRef.current;
@@ -126,17 +169,6 @@ export function VideoPlayer({
     else video.pause();
   };
 
-  const seekFromClientX = (clientX: number, track: HTMLElement) => {
-    const video = videoRef.current;
-    if (!video || !duration) return;
-    const rect = track.getBoundingClientRect();
-    const visual = Math.min(
-      1,
-      Math.max(0, (clientX - rect.left) / rect.width),
-    );
-    seekTo(timelineToLinear(visual, duration), !paused);
-  };
-
   return (
     <div className="iy-player w-full" style={getPlayerWrapStyle(itsYunmeiConfig.videoAspectRatio)}>
       {!src || error ? (
@@ -154,13 +186,15 @@ export function VideoPlayer({
             poster={poster}
             controls={false}
             playsInline
-            preload="metadata"
+            preload="auto"
+            fetchPriority="high"
             className="h-full w-full"
             onClick={togglePlay}
             onLoadedMetadata={(event) => {
               const nextDuration = event.currentTarget.duration;
               setDuration(nextDuration);
               onPlayback(event.currentTarget.currentTime, nextDuration, false);
+              if (!active) return;
               const resuming = considerResume(nextDuration);
               if (!resuming) {
                 event.currentTarget.play().catch(() => {});
@@ -168,7 +202,7 @@ export function VideoPlayer({
             }}
             onTimeUpdate={(event) => {
               const video = event.currentTarget;
-              if (!seekingRef.current) setProgress(video.currentTime);
+              setProgress(video.currentTime);
               onPlayback(video.currentTime, video.duration, false);
               const now = Date.now();
               if (now - lastSaveRef.current >= TIMING.progressSaveMs) {
@@ -253,35 +287,11 @@ export function VideoPlayer({
               </button>
               <div
                 className="iy-timeline"
-                role="slider"
+                role="progressbar"
                 aria-label="Video progress"
                 aria-valuemin={0}
                 aria-valuemax={Math.round(duration)}
                 aria-valuenow={Math.round(progress)}
-                tabIndex={0}
-                onPointerDown={(event) => {
-                  seekingRef.current = true;
-                  event.currentTarget.setPointerCapture(event.pointerId);
-                  seekFromClientX(event.clientX, event.currentTarget);
-                }}
-                onPointerMove={(event) => {
-                  if (!seekingRef.current) return;
-                  seekFromClientX(event.clientX, event.currentTarget);
-                }}
-                onPointerUp={() => {
-                  seekingRef.current = false;
-                }}
-                onPointerCancel={() => {
-                  seekingRef.current = false;
-                }}
-                onKeyDown={(event) => {
-                  if (!duration) return;
-                  if (event.key === "ArrowRight") {
-                    seekTo(Math.min(duration, progress + 5), !paused);
-                  } else if (event.key === "ArrowLeft") {
-                    seekTo(Math.max(0, progress - 5), !paused);
-                  }
-                }}
               >
                 <div
                   className="iy-timeline-fill"
@@ -334,4 +344,4 @@ export function VideoPlayer({
       )}
     </div>
   );
-}
+});

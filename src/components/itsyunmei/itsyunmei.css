@@ -148,7 +148,6 @@
 
 .iy-card-btn.is-revealed {
   z-index: 2;
-  transform: scale(1.18);
 }
 
 .iy-card-btn.is-muted {
@@ -216,6 +215,18 @@
   box-shadow:
     0 0 0 2px rgba(148, 40, 255, 0.55),
     0 10px 22px rgba(148, 40, 255, 0.28);
+}
+
+.iy-vsl-warm {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: -1;
+  width: 320px;
+  height: 568px;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .iy-card-placeholder {
@@ -483,14 +494,14 @@
 }
 
 .iy-timeline {
-  pointer-events: auto;
+  pointer-events: none;
   position: absolute;
   right: 0;
   bottom: 0;
   left: 0;
   z-index: 1;
   height: 10px;
-  cursor: pointer;
+  cursor: default;
   background: rgba(0, 0, 0, 0.28);
 }
 
@@ -712,7 +723,7 @@
   }
 
   .iy-card-btn.is-revealed {
-    transform: scale(1.18) !important;
+    transform: none !important;
   }
 
   .iy-card-inner {

@@ -36,7 +36,7 @@ export const itsYunmeiConfig = {
   /** CSS aspect-ratio, e.g. "16 / 9" or "9 / 16". */
   videoAspectRatio: "9 / 16",
   stanCheckoutUrl:
-    "https://stan.store/itsyunmei/p/the-weekly-sacred-transcript--3-free-gifts",
+    "https://stan.store/itsyunmei/p/the-weekly-sacred-transcript-3-free-gifts",
   /** If set, reveal the offer at this playback time. Otherwise 90% of duration. */
   offerRevealAtSeconds: 18 * 60 + 20,
   /** Bump this when the VSL file changes so saved progress/unlock stay separate. */

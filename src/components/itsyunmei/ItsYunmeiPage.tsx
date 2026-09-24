@@ -18,6 +18,7 @@ import { CardSelection } from "./CardSelection";
 import { ConnectionModal } from "./ConnectionModal";
 import { usePrefersReducedMotion } from "./usePrefersReducedMotion";
 import { VslScreen } from "./VslScreen";
+import type { VideoPlayerHandle } from "./VideoPlayer";
 
 export function ItsYunmeiPage() {
   const reducedMotion = usePrefersReducedMotion();
@@ -32,6 +33,8 @@ export function ItsYunmeiPage() {
   const vslHeadingRef = useRef<HTMLHeadingElement>(null);
   const cardsHeadingRef = useRef<HTMLHeadingElement>(null);
   const viewMessageRef = useRef<HTMLButtonElement>(null);
+  const playerRef = useRef<VideoPlayerHandle>(null);
+  const [playbackEnabled, setPlaybackEnabled] = useState(false);
   const autoOpenedRef = useRef(false);
   const continueLock = useRef(false);
   const fadeLock = useRef(false);
@@ -41,6 +44,7 @@ export function ItsYunmeiPage() {
   const timersRef = useRef<number[]>([]);
 
   const mainRef = useRef<HTMLDivElement>(null);
+  const cardsWrapRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setScreen(readFunnelScreen());
@@ -57,7 +61,7 @@ export function ItsYunmeiPage() {
   }, []);
 
   useEffect(() => {
-    const el = mainRef.current;
+    const el = cardsWrapRef.current;
     if (!el) return;
     if (modalOpen || connecting) el.setAttribute("inert", "");
     else el.removeAttribute("inert");
@@ -70,7 +74,9 @@ export function ItsYunmeiPage() {
   }, [hydrated, screen]);
 
   useEffect(() => {
-    if (!hydrated || screen !== "vsl" || vslViewedRef.current) return;
+    if (!hydrated || screen !== "vsl") return;
+    setPlaybackEnabled(true);
+    if (vslViewedRef.current) return;
     vslViewedRef.current = true;
     trackFunnelEvent("vsl_screen_viewed");
   }, [hydrated, screen]);
@@ -163,6 +169,8 @@ export function ItsYunmeiPage() {
     if (continueLock.current || fadeLock.current) return;
     continueLock.current = true;
     trackFunnelEvent("message_continued");
+    setPlaybackEnabled(true);
+    playerRef.current?.tryPlay();
     setModalOpen(false);
     setConnecting(false);
     setModalDismissed(false);
@@ -175,6 +183,8 @@ export function ItsYunmeiPage() {
     vslViewedRef.current = false;
     cardsViewedRef.current = false;
     trackFunnelEvent("cards_restarted");
+    setPlaybackEnabled(false);
+    playerRef.current?.pause();
     setSelection(resetSelection());
     setModalOpen(false);
     setConnecting(false);
@@ -182,16 +192,14 @@ export function ItsYunmeiPage() {
     fadeTo("cards");
   }, [fadeTo]);
 
-  if (!hydrated) {
-    return <div className="iy-page" />;
-  }
-
   return (
     <div className="iy-page">
       <div
         ref={mainRef}
         className="iy-main"
-        aria-hidden={modalOpen || connecting || undefined}
+        aria-hidden={
+          hydrated && (modalOpen || connecting) ? true : undefined
+        }
         style={
           opacity === 1
             ? undefined
@@ -208,32 +216,40 @@ export function ItsYunmeiPage() {
               }
         }
       >
-        {screen === "cards" ? (
-          <CardSelection
-            headingRef={cardsHeadingRef}
-            selected={selection.selected}
-            reducedMotion={reducedMotion}
-            showViewMessage={
-              modalDismissed &&
-              selection.selected.length === MAX_SELECTIONS &&
-              !modalOpen &&
-              !connecting
-            }
-            onSelect={handleSelect}
-            onViewMessage={() => setConnecting(true)}
-            viewMessageRef={viewMessageRef}
-          />
-        ) : (
+        {hydrated && screen === "cards" ? (
+          <div ref={cardsWrapRef}>
+            <CardSelection
+              headingRef={cardsHeadingRef}
+              selected={selection.selected}
+              reducedMotion={reducedMotion}
+              showViewMessage={
+                modalDismissed &&
+                selection.selected.length === MAX_SELECTIONS &&
+                !modalOpen &&
+                !connecting
+              }
+              onSelect={handleSelect}
+              onViewMessage={() => setConnecting(true)}
+              viewMessageRef={viewMessageRef}
+            />
+          </div>
+        ) : null}
+        <div
+          className={hydrated && screen === "vsl" ? undefined : "iy-vsl-warm"}
+          aria-hidden={!hydrated || screen !== "vsl" || undefined}
+        >
           <VslScreen
             headingRef={vslHeadingRef}
+            playerRef={playerRef}
+            active={playbackEnabled}
             onChooseCardsAgain={handleChooseCardsAgain}
           />
-        )}
+        </div>
       </div>
 
       <ConnectionModal
-        connecting={connecting && screen === "cards"}
-        open={modalOpen && screen === "cards"}
+        connecting={hydrated && connecting && screen === "cards"}
+        open={hydrated && modalOpen && screen === "cards"}
         onContinue={handleContinue}
       />
     </div>

@@ -12,15 +12,19 @@ import {
 import { FunnelFooter } from "./FunnelFooter";
 import { OfferCTA } from "./OfferCTA";
 import { OfferEndOverlay } from "./OfferEndOverlay";
-import { VideoPlayer } from "./VideoPlayer";
+import { VideoPlayer, type VideoPlayerHandle } from "./VideoPlayer";
 
 const copy = itsYunmeiConfig.copy.vsl;
 
 export function VslScreen({
   headingRef,
+  playerRef,
+  active,
   onChooseCardsAgain,
 }: {
   headingRef: RefObject<HTMLHeadingElement>;
+  playerRef: RefObject<VideoPlayerHandle | null>;
+  active: boolean;
   onChooseCardsAgain: () => void;
 }) {
   const [offerUnlocked, setOfferUnlocked] = useState(false);
@@ -81,6 +85,8 @@ export function VslScreen({
 
       <div className="mt-5 flex w-full justify-center sm:mt-7">
         <VideoPlayer
+          ref={playerRef}
+          active={active}
           onPlayback={considerOffer}
           onEnded={() => {
             considerOffer(1, 1, true);

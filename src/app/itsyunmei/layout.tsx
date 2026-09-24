@@ -8,6 +8,8 @@ const funnelImageHrefs = [
   ),
 ];
 
+const videoSrc = itsYunmeiConfig.videoSrc.trim();
+
 export default function ItsYunmeiLayout({ children }: { children: ReactNode }) {
   return (
     <>
@@ -20,6 +22,9 @@ export default function ItsYunmeiLayout({ children }: { children: ReactNode }) {
           fetchPriority="high"
         />
       ))}
+      {videoSrc ? (
+        <link rel="preload" as="video" href={videoSrc} fetchPriority="high" />
+      ) : null}
       {children}
     </>
   );
