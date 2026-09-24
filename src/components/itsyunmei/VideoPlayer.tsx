@@ -187,7 +187,6 @@ export const VideoPlayer = forwardRef<
             controls={false}
             playsInline
             preload="auto"
-            fetchPriority="high"
             className="h-full w-full"
             onClick={togglePlay}
             onLoadedMetadata={(event) => {

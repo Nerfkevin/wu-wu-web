@@ -1,6 +1,6 @@
 "use client";
 
-import type { RefObject } from "react";
+import type { Ref, RefObject } from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { trackFunnelEvent } from "@/lib/itsyunmei/analytics";
 import { itsYunmeiConfig } from "@/lib/itsyunmei/config";
@@ -23,7 +23,7 @@ export function VslScreen({
   onChooseCardsAgain,
 }: {
   headingRef: RefObject<HTMLHeadingElement>;
-  playerRef: RefObject<VideoPlayerHandle | null>;
+  playerRef: Ref<VideoPlayerHandle>;
   active: boolean;
   onChooseCardsAgain: () => void;
 }) {
