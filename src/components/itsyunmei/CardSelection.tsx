@@ -35,6 +35,20 @@ export function CardSelection({
 
   return (
     <section className="iy-screen w-full max-w-[440px]" aria-label="Choose three cards">
+      <div className="sr-only" aria-hidden>
+        {itsYunmeiConfig.cardFrontImages.map((src) =>
+          src ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              key={src}
+              src={src}
+              alt=""
+              fetchPriority="high"
+              decoding="async"
+            />
+          ) : null,
+        )}
+      </div>
       <BrandLockup />
 
       <h1

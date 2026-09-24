@@ -94,7 +94,13 @@ function CardFaceImage({
   return (
     // Native img so arbitrary future asset URLs never need a Next image host.
     // eslint-disable-next-line @next/next/no-img-element
-    <img src={src} alt={alt} onError={() => setBroken(true)} />
+    <img
+      src={src}
+      alt={alt}
+      fetchPriority="high"
+      decoding="async"
+      onError={() => setBroken(true)}
+    />
   );
 }
 

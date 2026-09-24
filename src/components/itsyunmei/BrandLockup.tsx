@@ -13,6 +13,9 @@ export function BrandLockup() {
           width={56}
           height={56}
           className="h-full w-full object-cover"
+          priority
+          fetchPriority="high"
+          decoding="sync"
           unoptimized
         />
       </div>

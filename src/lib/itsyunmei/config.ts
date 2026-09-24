@@ -20,9 +20,9 @@ export const MEANINGFUL_PROGRESS_SECONDS = 3;
 export const itsYunmeiConfig = {
   cardBackImage: null as string | null,
   cardFrontImages: [
-    "/brand/the%20intention.png",
-    "/brand/the%20possibility.png",
-    "/brand/the%20becoming.png",
+    "/brand/itsyunmei/the-intention.jpg",
+    "/brand/itsyunmei/the-possibility.jpg",
+    "/brand/itsyunmei/the-becoming.jpg",
   ] as [string | null, string | null, string | null],
   /** Accessible names for the three reveals (also used on placeholders). */
   cardTitles: ["The Intention", "The Possibility", "The Becoming"] as [
@@ -42,7 +42,7 @@ export const itsYunmeiConfig = {
   /** Bump this when the VSL file changes so saved progress/unlock stay separate. */
   videoVersion: "v1",
 
-  logoSrc: "/brand/avatar.PNG",
+  logoSrc: "/brand/itsyunmei/logo.jpg",
 
   copy: {
     brand: "Yun Mei",
