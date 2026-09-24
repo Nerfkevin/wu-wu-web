@@ -23,7 +23,13 @@ export default function ItsYunmeiLayout({ children }: { children: ReactNode }) {
         />
       ))}
       {videoSrc ? (
-        <link rel="preload" as="video" href={videoSrc} fetchPriority="high" />
+        <link
+          rel="preload"
+          as="fetch"
+          href={videoSrc}
+          crossOrigin="anonymous"
+          fetchPriority="high"
+        />
       ) : null}
       {children}
     </>

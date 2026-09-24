@@ -31,7 +31,7 @@ export const itsYunmeiConfig = {
     string,
     string,
   ],
-  videoSrc: "https://pub-1158c95d6eae4a40b9a4f882921bde94.r2.dev/vsl.mp4",
+  videoSrc: "https://pub-1158c95d6eae4a40b9a4f882921bde94.r2.dev/hls/v1/master.m3u8",
   videoPoster: null as string | null,
   captionsSrc: null as string | null,
   /** CSS aspect-ratio, e.g. "16 / 9" or "9 / 16". */
