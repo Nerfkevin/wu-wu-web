@@ -14,6 +14,10 @@ function keyOffer(videoVersion: string) {
   return `${PREFIX}.${videoVersion}.offerUnlocked`;
 }
 
+function keyOfferDeadline(videoVersion: string, kind: string) {
+  return `${PREFIX}.${videoVersion}.offerEnds.${kind}`;
+}
+
 function canUseStorage() {
   try {
     if (typeof window === "undefined" || !window.localStorage) return false;
@@ -83,6 +87,18 @@ export function readOfferUnlocked(videoVersion: string): boolean {
 
 export function writeOfferUnlocked(videoVersion: string, unlocked: boolean) {
   if (unlocked) writeRaw(keyOffer(videoVersion), "1");
+}
+
+export function latchOfferDeadline(
+  videoVersion: string,
+  kind: string,
+  durationMs: number,
+): number {
+  const existing = Number(readRaw(keyOfferDeadline(videoVersion, kind)));
+  if (Number.isFinite(existing) && existing > 0) return existing;
+  const endsAt = Date.now() + durationMs;
+  writeRaw(keyOfferDeadline(videoVersion, kind), String(endsAt));
+  return endsAt;
 }
 
 export function clampProgress(seconds: number, duration: number): number {

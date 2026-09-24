@@ -169,8 +169,6 @@ export function ItsYunmeiPage() {
     if (continueLock.current || fadeLock.current) return;
     continueLock.current = true;
     trackFunnelEvent("message_continued");
-    setPlaybackEnabled(true);
-    playerRef.current?.tryPlay();
     setModalOpen(false);
     setConnecting(false);
     setModalDismissed(false);

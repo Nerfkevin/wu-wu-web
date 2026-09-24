@@ -11,6 +11,7 @@ import {
 } from "@/lib/itsyunmei/storage";
 import { FunnelFooter } from "./FunnelFooter";
 import { OfferCTA } from "./OfferCTA";
+import { OfferCountdown } from "./OfferCountdown";
 import { OfferEndOverlay } from "./OfferEndOverlay";
 import { VideoPlayer, type VideoPlayerHandle } from "./VideoPlayer";
 
@@ -97,6 +98,11 @@ export function VslScreen({
 
       {offerUnlocked ? (
         <div className="iy-offer-slot">
+          <OfferCountdown
+            kind="inline"
+            durationMs={itsYunmeiConfig.inlineOfferCountdownMs}
+            enabled
+          />
           <OfferCTA source="inline" />
         </div>
       ) : null}

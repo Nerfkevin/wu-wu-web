@@ -5,6 +5,7 @@ import { createPortal } from "react-dom";
 import { itsYunmeiConfig } from "@/lib/itsyunmei/config";
 import { itsYunmeiFont } from "./font";
 import { OfferCTA } from "./OfferCTA";
+import { OfferCountdown } from "./OfferCountdown";
 
 const copy = itsYunmeiConfig.copy.offer;
 
@@ -90,6 +91,11 @@ export function OfferEndOverlay({
         <p id={descId} className="iy-end-body">
           {copy.body}
         </p>
+        <OfferCountdown
+          kind="end"
+          durationMs={itsYunmeiConfig.endOfferCountdownMs}
+          enabled={open}
+        />
         <OfferCTA className="iy-end-cta" source="end" />
         <button
           type="button"

@@ -7,6 +7,7 @@ export const TIMING = {
   connectingMs: 2000,
   screenFadeOutMs: 250,
   screenFadeInMs: 350,
+  vslPlayDelayMs: 500,
   progressSaveMs: 5000,
   reducedMotionMs: 80,
 } as const;
@@ -39,6 +40,8 @@ export const itsYunmeiConfig = {
     "https://stan.store/itsyunmei/p/the-weekly-sacred-transcript-3-free-gifts",
   /** If set, reveal the offer at this playback time. Otherwise 90% of duration. */
   offerRevealAtSeconds: 18 * 60 + 20,
+  inlineOfferCountdownMs: 10 * 60 * 1000,
+  endOfferCountdownMs: 5 * 60 * 1000,
   /** Bump this when the VSL file changes so saved progress/unlock stay separate. */
   videoVersion: "v1",
 
@@ -108,6 +111,7 @@ export const itsYunmeiConfig = {
       cta: "Begin Your Journey 👉",
       keepWatching: "Keep watching",
       supporting: "View the full offer and pricing at checkout.",
+      endsIn: "This offer ends in",
     },
   },
 } as const;

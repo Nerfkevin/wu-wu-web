@@ -20,6 +20,7 @@ import {
   getPlayerWrapStyle,
   linearToTimeline,
 } from "@/lib/itsyunmei/media";
+import { attachAdaptiveStream } from "@/lib/itsyunmei/hls";
 import {
   clampProgress,
   clearVideoProgress,
@@ -47,9 +48,10 @@ export const VideoPlayer = forwardRef<
   const lastSaveRef = useRef(0);
   const startedRef = useRef(false);
   const failedRef = useRef(false);
-  const showResumeRef = useRef(false);
+  const playArmedRef = useRef(false);
   const [error, setError] = useState<string | null>(null);
   const [showResume, setShowResume] = useState(false);
+  const showResumeRef = useRef(false);
   const [resumeTo, setResumeTo] = useState(0);
   const [posterBroken, setPosterBroken] = useState(false);
   const [paused, setPaused] = useState(true);
@@ -100,6 +102,12 @@ export const VideoPlayer = forwardRef<
     };
   }, [saveProgress, src]);
 
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video || !src) return;
+    return attachAdaptiveStream(video, src);
+  }, [src]);
+
   const considerResume = useCallback(
     (videoDuration: number) => {
       const video = videoRef.current;
@@ -144,10 +152,16 @@ export const VideoPlayer = forwardRef<
 
   useEffect(() => {
     if (!active) {
+      playArmedRef.current = false;
       videoRef.current?.pause();
       return;
     }
-    tryPlay();
+    const delay = TIMING.vslPlayDelayMs;
+    const id = window.setTimeout(() => {
+      playArmedRef.current = true;
+      tryPlay();
+    }, delay);
+    return () => window.clearTimeout(id);
   }, [active, tryPlay]);
 
   const seekTo = (seconds: number, play: boolean) => {
@@ -182,7 +196,6 @@ export const VideoPlayer = forwardRef<
         <>
           <video
             ref={videoRef}
-            src={src}
             poster={poster}
             controls={false}
             playsInline
@@ -193,7 +206,7 @@ export const VideoPlayer = forwardRef<
               const nextDuration = event.currentTarget.duration;
               setDuration(nextDuration);
               onPlayback(event.currentTarget.currentTime, nextDuration, false);
-              if (!active) return;
+              if (!active || !playArmedRef.current) return;
               const resuming = considerResume(nextDuration);
               if (!resuming) {
                 event.currentTarget.play().catch(() => {});
