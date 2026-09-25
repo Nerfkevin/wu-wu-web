@@ -9,6 +9,7 @@ const firedMilestones = new Set<number>();
 let maxSeconds = 0;
 let lastDuration = 0;
 let lastFlushedMax = -1;
+let lastPersonPercent = -1;
 
 export function trackFunnelEvent(event: string, properties?: Props) {
   if (typeof window === "undefined") return;
@@ -34,6 +35,13 @@ export function trackWatchProgress(currentTime: number, duration: number) {
     vsl_max_percent: percent,
     vsl_max_seconds: Math.round(maxSeconds),
   });
+  if (percent !== lastPersonPercent) {
+    lastPersonPercent = percent;
+    posthog.setPersonProperties({
+      vsl_max_percent: percent,
+      vsl_max_seconds: Math.round(maxSeconds),
+    });
+  }
 
   for (const milestone of WATCH_MILESTONES) {
     if (percent < milestone || firedMilestones.has(milestone)) continue;

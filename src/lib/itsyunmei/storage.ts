@@ -2,6 +2,10 @@ const PREFIX = "woowoo.itsyunmei";
 
 export type FunnelScreen = "cards" | "vsl";
 
+function keyVisitor() {
+  return `${PREFIX}.visitorId`;
+}
+
 function keyScreen() {
   return `${PREFIX}.screen`;
 }
@@ -55,6 +59,17 @@ function removeRaw(key: string) {
   } catch {
     // ignore
   }
+}
+
+export function readOrCreateVisitorId(): string {
+  const existing = readRaw(keyVisitor());
+  if (existing && existing.length > 8) return existing;
+  const next =
+    typeof crypto !== "undefined" && "randomUUID" in crypto
+      ? crypto.randomUUID()
+      : `iy_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 12)}`;
+  writeRaw(keyVisitor(), next);
+  return next;
 }
 
 export function readFunnelScreen(): FunnelScreen {
