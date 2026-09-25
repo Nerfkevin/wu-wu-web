@@ -23,6 +23,9 @@ export function trackCtaShown(source: "inline" | "end") {
   posthog.setPersonProperties({
     cta_shown: true,
     last_cta_shown_source: source,
+    ...(source === "inline"
+      ? { inline_cta_shown: true }
+      : { popup_cta_shown: true }),
   });
 }
 
@@ -32,12 +35,16 @@ export function trackButtonClicked(button: string, properties?: Props) {
 }
 
 export function trackCheckoutClicked(source: "inline" | "end") {
-  trackFunnelEvent("checkout_clicked", { source, button: "checkout" });
-  trackFunnelEvent("button_clicked", { button: "checkout", source });
+  const button = source === "inline" ? "checkout_inline" : "checkout_popup";
+  trackFunnelEvent("checkout_clicked", { source, button });
+  trackFunnelEvent("button_clicked", { button, source });
   posthog.setPersonProperties({
     checkout_clicked: true,
     last_cta_source: source,
-    last_button: "checkout",
+    last_button: button,
+    ...(source === "inline"
+      ? { inline_cta_clicked: true }
+      : { popup_cta_clicked: true }),
   });
 }
 
