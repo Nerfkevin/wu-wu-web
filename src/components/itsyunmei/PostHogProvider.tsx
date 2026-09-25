@@ -9,17 +9,21 @@ export const POSTHOG_PROXY_PATH = "/wu-relay";
 
 function initItsYunmeiPostHog() {
   if (typeof window === "undefined" || posthog.__loaded) return;
+  if (!window.location.pathname.startsWith("/itsyunmei")) return;
   const token = process.env.NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN;
   if (!token) return;
 
   posthog.init(token, {
-    api_host: process.env.NEXT_PUBLIC_POSTHOG_HOST || POSTHOG_PROXY_PATH,
+    api_host: POSTHOG_PROXY_PATH,
     ui_host: "https://us.posthog.com",
     defaults: "2026-05-30",
     capture_exceptions: true,
     persistence: "localStorage",
     loaded: (client) => {
-      client.register({ funnel: "itsyunmei" });
+      client.register({
+        funnel: "itsyunmei",
+        site: "wu-wu.com",
+      });
     },
   });
 }
