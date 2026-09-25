@@ -175,21 +175,6 @@ export function ItsYunmeiPage() {
     fadeTo("vsl");
   }, [fadeTo]);
 
-  const handleChooseCardsAgain = useCallback(() => {
-    autoOpenedRef.current = false;
-    continueLock.current = false;
-    vslViewedRef.current = false;
-    cardsViewedRef.current = false;
-    trackFunnelEvent("cards_restarted");
-    setPlaybackEnabled(false);
-    playerRef.current?.pause();
-    setSelection(resetSelection());
-    setModalOpen(false);
-    setConnecting(false);
-    setModalDismissed(false);
-    fadeTo("cards");
-  }, [fadeTo]);
-
   return (
     <div className="iy-page">
       <div
@@ -240,7 +225,6 @@ export function ItsYunmeiPage() {
             headingRef={vslHeadingRef}
             playerRef={playerRef}
             active={playbackEnabled}
-            onChooseCardsAgain={handleChooseCardsAgain}
           />
         </div>
       </div>

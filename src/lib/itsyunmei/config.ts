@@ -95,7 +95,6 @@ export const itsYunmeiConfig = {
       headlineHighlight: "Final Revelation",
       headlineAfter: "",
       support: "The truth is about to be revealed.",
-      chooseCardsAgain: "← Back to card reading",
       footer: "Yun Mei",
     },
     video: {

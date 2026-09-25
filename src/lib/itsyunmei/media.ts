@@ -18,9 +18,9 @@ export function getPlayerWrapStyle(aspect: string): CSSProperties {
   const { w, h } = parseAspectRatio(aspect);
   return {
     marginInline: "auto",
-    width: "100%",
-    maxWidth: `min(100%, 760px, calc(min(80svh, 820px) * ${w} / ${h}))`,
+    width: `min(760px, calc(100vw - 2.5rem), calc(min(80svh, 820px) * ${w} / ${h}))`,
     aspectRatio: `${w} / ${h}`,
+    flexShrink: 0,
   };
 }
 

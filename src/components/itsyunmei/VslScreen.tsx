@@ -21,12 +21,10 @@ export function VslScreen({
   headingRef,
   playerRef,
   active,
-  onChooseCardsAgain,
 }: {
   headingRef: RefObject<HTMLHeadingElement>;
   playerRef: Ref<VideoPlayerHandle>;
   active: boolean;
-  onChooseCardsAgain: () => void;
 }) {
   const [offerUnlocked, setOfferUnlocked] = useState(false);
   const [showEndOverlay, setShowEndOverlay] = useState(false);
@@ -84,7 +82,7 @@ export function VslScreen({
         {copy.support}
       </p>
 
-      <div className="mt-5 flex w-full justify-center sm:mt-7">
+      <div className="mt-5 w-full sm:mt-7">
         <VideoPlayer
           ref={playerRef}
           active={active}
@@ -111,14 +109,6 @@ export function VslScreen({
         open={showEndOverlay}
         onKeepWatching={() => setShowEndOverlay(false)}
       />
-
-      <button
-        type="button"
-        className="iy-text-btn mt-6"
-        onClick={onChooseCardsAgain}
-      >
-        {copy.chooseCardsAgain}
-      </button>
 
       <FunnelFooter line={copy.footer} />
     </section>
