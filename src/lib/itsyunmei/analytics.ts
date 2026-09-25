@@ -20,6 +20,25 @@ export function trackCtaShown(source: "inline" | "end") {
   if (shownCtas.has(source)) return;
   shownCtas.add(source);
   trackFunnelEvent("cta_shown", { source });
+  posthog.setPersonProperties({
+    cta_shown: true,
+    last_cta_shown_source: source,
+  });
+}
+
+export function trackButtonClicked(button: string, properties?: Props) {
+  trackFunnelEvent("button_clicked", { button, ...properties });
+  posthog.setPersonProperties({ last_button: button });
+}
+
+export function trackCheckoutClicked(source: "inline" | "end") {
+  trackFunnelEvent("checkout_clicked", { source, button: "checkout" });
+  trackFunnelEvent("button_clicked", { button: "checkout", source });
+  posthog.setPersonProperties({
+    checkout_clicked: true,
+    last_cta_source: source,
+    last_button: "checkout",
+  });
 }
 
 export function trackWatchProgress(currentTime: number, duration: number) {

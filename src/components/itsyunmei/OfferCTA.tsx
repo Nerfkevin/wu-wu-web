@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { hasAsset, itsYunmeiConfig } from "@/lib/itsyunmei/config";
-import { trackCtaShown, trackFunnelEvent } from "@/lib/itsyunmei/analytics";
+import { trackCtaShown, trackCheckoutClicked } from "@/lib/itsyunmei/analytics";
 import { itsYunmeiFont } from "./font";
 
 const copy = itsYunmeiConfig.copy.offer;
@@ -36,7 +36,7 @@ export function OfferCTA({
     <a
       href={url}
       className={classNames}
-      onClick={() => trackFunnelEvent("checkout_clicked", { source })}
+      onClick={() => trackCheckoutClicked(source)}
     >
       {copy.cta}
     </a>

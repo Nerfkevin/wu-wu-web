@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { trackFunnelEvent } from "@/lib/itsyunmei/analytics";
+import { trackButtonClicked, trackFunnelEvent } from "@/lib/itsyunmei/analytics";
 import { MAX_SELECTIONS, TIMING } from "@/lib/itsyunmei/config";
 import {
   resetSelection,
@@ -84,7 +84,8 @@ export function ItsYunmeiPage() {
   useEffect(() => {
     const len = selection.selected.length;
     if (len > prevSelectedLen.current) {
-      trackFunnelEvent("card_selected", { selection_number: len });
+      trackFunnelEvent("card_selected", { selection_number: len, button: "card" });
+      trackButtonClicked("card", { selection_number: len });
       if (len === MAX_SELECTIONS) trackFunnelEvent("reading_completed");
     }
     prevSelectedLen.current = len;
@@ -169,6 +170,7 @@ export function ItsYunmeiPage() {
     if (continueLock.current || fadeLock.current) return;
     continueLock.current = true;
     trackFunnelEvent("message_continued");
+    trackButtonClicked("message_continue");
     setModalOpen(false);
     setConnecting(false);
     setModalDismissed(false);
@@ -212,7 +214,10 @@ export function ItsYunmeiPage() {
                 !connecting
               }
               onSelect={handleSelect}
-              onViewMessage={() => setConnecting(true)}
+              onViewMessage={() => {
+                trackButtonClicked("view_message");
+                setConnecting(true);
+              }}
               viewMessageRef={viewMessageRef}
             />
           </div>

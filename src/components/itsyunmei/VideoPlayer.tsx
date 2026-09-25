@@ -11,6 +11,7 @@ import {
 } from "react";
 import {
   flushWatchDepth,
+  trackButtonClicked,
   trackFunnelEvent,
   trackWatchProgress,
 } from "@/lib/itsyunmei/analytics";
@@ -187,8 +188,13 @@ export const VideoPlayer = forwardRef<
   const togglePlay = () => {
     const video = videoRef.current;
     if (!video || showResume) return;
-    if (video.paused) video.play().catch(() => {});
-    else video.pause();
+    if (video.paused) {
+      trackButtonClicked("play");
+      video.play().catch(() => {});
+    } else {
+      trackButtonClicked("pause");
+      video.pause();
+    }
   };
 
   return (
@@ -343,6 +349,7 @@ export const VideoPlayer = forwardRef<
                   type="button"
                   className="iy-resume-choice"
                   onClick={() => {
+                    trackButtonClicked("resume_continue");
                     setShowResume(false);
                     seekTo(resumeTo, true);
                   }}
@@ -356,6 +363,7 @@ export const VideoPlayer = forwardRef<
                   type="button"
                   className="iy-resume-choice"
                   onClick={() => {
+                    trackButtonClicked("resume_start_over");
                     setShowResume(false);
                     clearVideoProgress(version);
                     startedRef.current = false;

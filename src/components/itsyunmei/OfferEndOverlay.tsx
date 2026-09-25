@@ -2,6 +2,7 @@
 
 import { useEffect, useId, useRef } from "react";
 import { createPortal } from "react-dom";
+import { trackButtonClicked } from "@/lib/itsyunmei/analytics";
 import { itsYunmeiConfig } from "@/lib/itsyunmei/config";
 import { itsYunmeiFont } from "./font";
 import { OfferCTA } from "./OfferCTA";
@@ -100,7 +101,10 @@ export function OfferEndOverlay({
         <button
           type="button"
           className="iy-text-btn iy-end-dismiss"
-          onClick={onKeepWatching}
+          onClick={() => {
+            trackButtonClicked("keep_watching");
+            onKeepWatching();
+          }}
         >
           {copy.keepWatching}
         </button>
