@@ -9,7 +9,11 @@ import {
   useRef,
   useState,
 } from "react";
-import { trackFunnelEvent } from "@/lib/itsyunmei/analytics";
+import {
+  flushWatchDepth,
+  trackFunnelEvent,
+  trackWatchProgress,
+} from "@/lib/itsyunmei/analytics";
 import {
   MEANINGFUL_PROGRESS_SECONDS,
   TIMING,
@@ -84,8 +88,12 @@ export const VideoPlayer = forwardRef<
     const video = videoRef.current;
     if (!video || !src) return;
 
-    const persist = () => saveProgress(video.currentTime);
-    const onPause = () => persist();
+    const persist = () => {
+      saveProgress(video.currentTime);
+      trackWatchProgress(video.currentTime, video.duration);
+      flushWatchDepth("hidden");
+    };
+    const onPause = () => saveProgress(video.currentTime);
     const onPageHide = () => persist();
     const onVis = () => {
       if (document.visibilityState === "hidden") persist();
@@ -216,6 +224,7 @@ export const VideoPlayer = forwardRef<
               const video = event.currentTarget;
               setProgress(video.currentTime);
               onPlayback(video.currentTime, video.duration, false);
+              trackWatchProgress(video.currentTime, video.duration);
               const now = Date.now();
               if (now - lastSaveRef.current >= TIMING.progressSaveMs) {
                 lastSaveRef.current = now;
@@ -229,6 +238,10 @@ export const VideoPlayer = forwardRef<
                 event.currentTarget.duration,
                 false,
               );
+              trackWatchProgress(
+                event.currentTarget.currentTime,
+                event.currentTarget.duration,
+              );
             }}
             onPlay={() => setPaused(false)}
             onPause={() => setPaused(true)}
@@ -241,6 +254,11 @@ export const VideoPlayer = forwardRef<
             }}
             onEnded={(event) => {
               saveProgress(event.currentTarget.currentTime);
+              trackWatchProgress(
+                event.currentTarget.currentTime,
+                event.currentTarget.duration,
+              );
+              flushWatchDepth("ended");
               setPaused(true);
               onPlayback(
                 event.currentTarget.currentTime,

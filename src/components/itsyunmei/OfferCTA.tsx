@@ -1,7 +1,8 @@
 "use client";
 
+import { useEffect } from "react";
 import { hasAsset, itsYunmeiConfig } from "@/lib/itsyunmei/config";
-import { trackFunnelEvent } from "@/lib/itsyunmei/analytics";
+import { trackCtaShown, trackFunnelEvent } from "@/lib/itsyunmei/analytics";
 import { itsYunmeiFont } from "./font";
 
 const copy = itsYunmeiConfig.copy.offer;
@@ -13,6 +14,10 @@ export function OfferCTA({
   className?: string;
   source: "inline" | "end";
 }) {
+  useEffect(() => {
+    trackCtaShown(source);
+  }, [source]);
+
   const url = hasAsset(itsYunmeiConfig.stanCheckoutUrl)
     ? itsYunmeiConfig.stanCheckoutUrl.trim()
     : null;
