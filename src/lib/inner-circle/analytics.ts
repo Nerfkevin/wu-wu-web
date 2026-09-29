@@ -14,7 +14,7 @@ function capture(event: string, properties?: Props) {
 
 export function initInnerCircleAnalytics() {
   if (typeof window === "undefined" || started || posthog.__loaded) return;
-  if (!window.location.pathname.startsWith("/yunmeisinercircle")) return;
+  if (!window.location.pathname.startsWith("/yunmeisinnercircle")) return;
   const token = process.env.NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN;
   if (!token) return;
   started = true;

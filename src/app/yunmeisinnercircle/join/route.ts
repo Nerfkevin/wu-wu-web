@@ -10,7 +10,7 @@ export function GET(request: NextRequest) {
     return NextResponse.redirect(innerCircleConfig.checkoutUrl, 302);
   }
 
-  const back = new URL("/yunmeisinercircle", request.url);
+  const back = new URL("/yunmeisinnercircle", request.url);
   back.searchParams.set("enrollment", enrollment.status);
   back.hash = "invitation";
   return NextResponse.redirect(back, 302);

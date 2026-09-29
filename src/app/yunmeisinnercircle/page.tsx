@@ -5,7 +5,7 @@ import { InnerCirclePage } from "@/components/inner-circle/InnerCirclePage";
 import { innerCircleConfig } from "@/lib/inner-circle/config";
 import "@/components/inner-circle/inner-circle.css";
 
-const path = "/yunmeisinercircle";
+const path = "/yunmeisinnercircle";
 const offerConfigured = Boolean(
   innerCircleConfig.closesAt && innerCircleConfig.timeZone,
 );

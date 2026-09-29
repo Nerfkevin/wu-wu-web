@@ -10,7 +10,7 @@ const variants = {
   primary:
     "inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-[#A7562B] px-6 py-3.5 text-center text-base font-semibold text-white shadow-[0_10px_24px_rgba(167,86,43,0.28)] transition hover:bg-[#8E4824] sm:w-auto",
   compact:
-    "inline-flex min-h-11 items-center justify-center gap-1.5 rounded-full bg-[#A7562B] px-4 py-2 text-sm font-semibold text-white hover:bg-[#8E4824]",
+    "inline-flex min-h-12 items-center justify-center gap-1.5 rounded-full bg-[#A7562B] px-5 py-2.5 text-[15px] font-semibold text-white hover:bg-[#8E4824]",
   sticky:
     "inline-flex min-h-11 w-full items-center justify-center rounded-full bg-[#A7562B] px-4 py-3 text-sm font-semibold text-white hover:bg-[#8E4824]",
   onDark:

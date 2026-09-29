@@ -26,7 +26,7 @@ body:has(.ic-root) {
   font-weight: 700;
   letter-spacing: -0.035em;
   font-size: clamp(2.05rem, 8vw, 3.25rem);
-  line-height: 0.92;
+  line-height: 0.96;
 }
 
 @media (min-width: 1024px) {
@@ -67,7 +67,7 @@ body:has(.ic-root) {
 
 @media (max-width: 767px) {
   html:has(.ic-root) {
-    font-size: 14px;
+    font-size: 15px;
   }
 
   .ic-root.ic-sticky-on {
@@ -75,26 +75,32 @@ body:has(.ic-root) {
   }
 
   .ic-hero-title {
-    font-size: clamp(2.35rem, 10vw, 3rem);
+    font-size: clamp(2.55rem, 11vw, 3.2rem);
+    line-height: 1.24;
+  }
+
+  .ic-hero-lead {
+    font-size: 17px;
+    line-height: 1.7;
   }
 
   .ic-root :is(h2, h3).text-4xl {
-    font-size: 1.85rem;
-    line-height: 1.12;
+    font-size: 1.95rem;
+    line-height: 1.16;
   }
 
   .ic-root h3.text-3xl {
-    font-size: 1.45rem;
+    font-size: 1.55rem;
   }
 
   .ic-root h3.text-2xl,
   .ic-root h4.text-xl {
-    font-size: 1.2rem;
+    font-size: 1.28rem;
   }
 
   .ic-root :is(.text-\[17px\], .text-\[15px\]) {
-    font-size: 15px;
-    line-height: 1.55;
+    font-size: 16px;
+    line-height: 1.6;
   }
 }
 

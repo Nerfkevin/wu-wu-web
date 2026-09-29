@@ -50,7 +50,7 @@ export function EnrollmentProvider({
 
     const sync = async () => {
       try {
-        const res = await fetch("/yunmeisinercircle/time", { cache: "no-store" });
+        const res = await fetch("/yunmeisinnercircle/time", { cache: "no-store" });
         if (!res.ok) return;
         const data: { now?: unknown } = await res.json();
         if (typeof data.now === "number" && Number.isFinite(data.now)) {

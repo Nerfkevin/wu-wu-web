@@ -24,6 +24,16 @@ const nextConfig = {
       { source: "/wuwu/privacy", destination: "/privacy", permanent: true },
       { source: "/wuwu/terms", destination: "/terms", permanent: true },
       { source: "/wuwu/contact", destination: "/contact", permanent: true },
+      {
+        source: "/yunmeisinercircle",
+        destination: "/yunmeisinnercircle",
+        permanent: true,
+      },
+      {
+        source: "/yunmeisinercircle/:path*",
+        destination: "/yunmeisinnercircle/:path*",
+        permanent: true,
+      },
     ];
   },
 };

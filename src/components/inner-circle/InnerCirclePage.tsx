@@ -194,9 +194,11 @@ function Hero() {
             A private community by Yun Mei
           </p>
           <h1 className="ic-hero-title mt-5 max-w-full text-[#3F3226]">
-            Yun Mei’s <span className="ic-hero-accent">Inner Circle</span>
+            Yun Mei’s
+            <br />
+            <span className="ic-hero-accent">Inner Circle</span>
           </h1>
-          <p className="mt-5 max-w-md text-[17px] leading-7 text-[#5C534A]">
+          <p className="ic-hero-lead mt-5 max-w-md text-[#5C534A]">
             A private circle for gentle guidance and a practice you can come back
             to, with three digital gifts included.
           </p>
@@ -204,7 +206,7 @@ function Hero() {
             <JoinButton
               id="hero-join"
               section="hero"
-              className="w-auto min-h-10 whitespace-nowrap px-4 py-2 text-sm"
+              className="w-auto min-h-12 whitespace-nowrap px-5 py-2.5 text-[16px]"
             >
               Get instant access — {price}
               <span aria-hidden="true">→</span>
@@ -444,6 +446,9 @@ function MemberNotice() {
   const scroller = useRef<HTMLDivElement>(null);
   const [index, setIndex] = useState(0);
 
+  const indexRef = useRef(0);
+  indexRef.current = index;
+
   const nearest = (root: HTMLDivElement) => {
     const cards = Array.from(root.children) as HTMLElement[];
     let closest = 0;
@@ -468,7 +473,7 @@ function MemberNotice() {
 
   const onScroll = () => {
     const root = scroller.current;
-    if (!root) return;
+    if (!root || root.dataset.dragging === "1") return;
     const closest = nearest(root);
     setIndex((current) => (current === closest ? current : closest));
   };
@@ -478,31 +483,51 @@ function MemberNotice() {
     if (!root) return;
     let startX = 0;
     let startY = 0;
-    let startScroll = 0;
+    let lastX = 0;
     let axis: "x" | "y" | null = null;
+    let dragging = false;
 
     const onStart = (event: TouchEvent) => {
       if (event.touches.length !== 1) return;
-      startX = event.touches[0].clientX;
+      startX = lastX = event.touches[0].clientX;
       startY = event.touches[0].clientY;
-      startScroll = root.scrollLeft;
       axis = null;
+      dragging = true;
+      root.dataset.dragging = "1";
     };
     const onMove = (event: TouchEvent) => {
-      if (event.touches.length !== 1) return;
-      const dx = event.touches[0].clientX - startX;
-      const dy = event.touches[0].clientY - startY;
+      if (!dragging || event.touches.length !== 1) return;
+      const x = event.touches[0].clientX;
+      const y = event.touches[0].clientY;
+      const dx = x - startX;
+      const dy = y - startY;
       if (!axis) {
         if (Math.abs(dx) < 8 && Math.abs(dy) < 8) return;
         axis = Math.abs(dx) > Math.abs(dy) ? "x" : "y";
       }
       if (axis !== "x") return;
       event.preventDefault();
-      root.scrollLeft = startScroll - dx;
+      root.scrollLeft -= x - lastX;
+      lastX = x;
     };
     const onEnd = () => {
-      if (axis === "x") go(nearest(root));
+      if (!dragging) return;
+      dragging = false;
+      root.dataset.dragging = "0";
+      if (axis !== "x") {
+        axis = null;
+        return;
+      }
+      const dx = lastX - startX;
+      const max = root.children.length - 1;
+      let next = indexRef.current;
+      if (dx <= -40) next = Math.min(max, next + 1);
+      else if (dx >= 40) next = Math.max(0, next - 1);
       axis = null;
+      const card = root.children[next] as HTMLElement | undefined;
+      if (!card) return;
+      root.scrollTo({ left: card.offsetLeft - root.offsetLeft, behavior: "smooth" });
+      setIndex(next);
     };
 
     root.addEventListener("touchstart", onStart, { passive: true });
@@ -530,12 +555,12 @@ function MemberNotice() {
           <div
             ref={scroller}
             onScroll={onScroll}
-            className="flex snap-x snap-mandatory touch-pan-y gap-4 overflow-x-auto overscroll-x-contain pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            className="flex snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [touch-action:pan-y] [&::-webkit-scrollbar]:hidden"
           >
             {notices.map((notice) => (
               <article
                 key={notice.label}
-                className="w-[86%] shrink-0 snap-start overflow-hidden rounded-[1.5rem] bg-[#FFFCF8] shadow-[0_16px_40px_rgba(63,50,38,0.08)] ring-1 ring-[#E7DCCB] sm:w-[calc(50%-0.5rem)]"
+                className="w-[86%] shrink-0 snap-start snap-always overflow-hidden rounded-[1.5rem] bg-[#FFFCF8] shadow-[0_16px_40px_rgba(63,50,38,0.08)] ring-1 ring-[#E7DCCB] sm:w-[calc(50%-0.5rem)]"
               >
                 <div className="relative aspect-[4/3]">
                   <Image
@@ -664,7 +689,7 @@ function Gifts() {
         <div className="mt-6 flex flex-col items-center gap-4">
           <JoinButton
             section="gifts"
-            className="w-auto min-h-10 whitespace-nowrap px-4 py-2 text-sm"
+            className="w-auto min-h-12 whitespace-nowrap px-5 py-2.5 text-[16px]"
           >
             Join the Circle — {price}
           </JoinButton>
@@ -977,7 +1002,7 @@ function FinalInvite() {
                 </div>
                 <JoinButton
                   section="final"
-                  className="w-full max-w-full whitespace-nowrap px-4 py-2.5 text-sm sm:w-auto"
+                  className="w-full max-w-full whitespace-nowrap px-5 py-3 text-[16px] sm:w-auto"
                 >
                   <Lock className="h-3.5 w-3.5" aria-hidden="true" />
                   Get instant access
@@ -1124,7 +1149,7 @@ function StickyOffer() {
         </div>
         <JoinButton
           section="sticky"
-          className="h-9 w-auto min-h-0 shrink-0 whitespace-nowrap px-3.5 py-0 text-[13px]"
+          className="h-10 w-auto min-h-0 shrink-0 whitespace-nowrap px-4 py-0 text-sm"
         >
           Get Instant Access <span aria-hidden="true">→</span>
         </JoinButton>
