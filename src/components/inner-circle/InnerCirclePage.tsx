@@ -640,7 +640,7 @@ function MemberNotice() {
 
 function Gifts() {
   return (
-    <section id="gifts" className="scroll-mt-32 bg-[#F9F3E7]">
+    <section id="gifts" className="scroll-mt-32 bg-[#F0E6D4]">
       <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-24">
         <SectionIntro
           eyebrow="Included with your membership"
@@ -793,7 +793,7 @@ function How() {
   ];
 
   return (
-    <section id="how" className="scroll-mt-32 bg-[#F0E6D4]">
+    <section id="how" className="scroll-mt-32 bg-[#F9F3E7]">
       <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-24">
         <SectionIntro eyebrow="Start" title="How it works" />
         <ol className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -1170,8 +1170,8 @@ function PageBody() {
         <StatsBreak />
         <MemberNotice />
         <Testimonials />
-        <Gifts />
         <How />
+        <Gifts />
         <About />
         <FinalInvite />
         <Faq />
