@@ -1,0 +1,128 @@
+body:has(.ic-root) {
+  background: #f9f3e7;
+  color: #302b33;
+  color-scheme: light;
+}
+
+.ic-root {
+  color-scheme: light;
+  min-height: 100svh;
+  background-color: #f9f3e7;
+  color: #3f3226;
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  overflow-x: clip;
+}
+
+.ic-root :is(h1, h2, h3, h4) {
+  font-family: var(--font-ic-display), ui-serif, Georgia, serif;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+  color: #3f3226;
+}
+
+.ic-hero-title {
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  font-size: clamp(2.05rem, 8vw, 3.25rem);
+  line-height: 0.92;
+}
+
+@media (min-width: 1024px) {
+  .ic-hero-title {
+    font-size: 4.7rem;
+  }
+}
+
+.ic-hero-accent {
+  font-style: italic;
+  font-weight: 600;
+  color: #a7562b;
+}
+
+.ic-root .ic-sans {
+  font-family: var(--font-inner-circle), ui-sans-serif, system-ui, sans-serif;
+  letter-spacing: 0;
+}
+
+.ic-root .ic-nav {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #35253f;
+  text-underline-offset: 3px;
+}
+
+.ic-root .ic-nav:hover {
+  text-decoration: underline;
+}
+
+.ic-root .ic-nav:focus-visible {
+  outline: 2px solid #35253f;
+  outline-offset: 3px;
+}
+
+@media (max-width: 767px) {
+  html:has(.ic-root) {
+    font-size: 14px;
+  }
+
+  .ic-root.ic-sticky-on {
+    padding-bottom: calc(4.75rem + env(safe-area-inset-bottom));
+  }
+
+  .ic-hero-title {
+    font-size: clamp(2.35rem, 10vw, 3rem);
+  }
+
+  .ic-root :is(h2, h3).text-4xl {
+    font-size: 1.85rem;
+    line-height: 1.12;
+  }
+
+  .ic-root h3.text-3xl {
+    font-size: 1.45rem;
+  }
+
+  .ic-root h3.text-2xl,
+  .ic-root h4.text-xl {
+    font-size: 1.2rem;
+  }
+
+  .ic-root :is(.text-\[17px\], .text-\[15px\]) {
+    font-size: 15px;
+    line-height: 1.55;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html:has(.ic-root) {
+    scroll-behavior: auto;
+  }
+}
+
+.ic-clock {
+  display: flex;
+  width: 100%;
+  max-width: 18.75rem;
+  flex-wrap: nowrap;
+  justify-content: center;
+  gap: 0.35rem;
+}
+
+.ic-clock-unit {
+  flex: 1 1 0;
+  min-width: 0;
+  text-align: center;
+}
+
+.ic-clock-value {
+  display: block;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+  letter-spacing: 0;
+  line-height: 1;
+}

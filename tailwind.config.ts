@@ -23,6 +23,7 @@ export default {
           "Georgia",
           "serif",
         ],
+        "ic-display": ["var(--font-ic-display)", "ui-serif", "Georgia", "serif"],
       },
       colors: {
         border: "hsl(var(--border))",
