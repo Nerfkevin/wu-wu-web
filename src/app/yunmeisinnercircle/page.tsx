@@ -13,7 +13,7 @@ const offerConfigured = Boolean(
 export const metadata: Metadata = {
   title: "Yun Mei’s Inner Circle",
   description:
-    "A private community for gentle guidance, meaningful reflection, and a more consistent practice of coming back to yourself. $4.99/month during the 11:11 Portal, with three digital gifts included.",
+    "A private community for gentle guidance, meaningful reflection, and a more consistent practice of coming back to yourself. $4.99 during the 11:11 Portal, with three digital gifts included.",
   alternates: { canonical: `https://wu-wu.com${path}` },
   robots: offerConfigured ? undefined : { index: false, follow: false },
 };

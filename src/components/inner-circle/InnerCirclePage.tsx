@@ -127,7 +127,7 @@ function Announcement() {
       <div className="mx-auto flex max-w-3xl flex-col items-center gap-2">
         <p className="flex items-center justify-center gap-2 text-xs font-bold leading-5 sm:text-[13px]">
           <Hourglass className="h-3.5 w-3.5 shrink-0" strokeWidth={1.75} aria-hidden="true" />
-          Limited-time offer: save {savings}
+          Limited-time offer: save {savings} on the subscription
         </p>
         <div className="flex items-center gap-2">
           <Hourglass className="h-3.5 w-3.5 shrink-0" strokeWidth={1.75} aria-hidden="true" />
@@ -840,8 +840,8 @@ function faqItems() {
     },
     {
       id: "one-time",
-      q: "Is this a one-time payment?",
-      a: `No. This is a monthly subscription priced at $4.99 per month (${innerCircleConfig.currency}). Renewal terms and any applicable tax are shown at checkout before you pay.`,
+      q: "What is the price?",
+      a: `The price is ${price}. Renewal terms and any applicable tax are shown at checkout before you pay.`,
     },
     {
       id: "portal-closes",

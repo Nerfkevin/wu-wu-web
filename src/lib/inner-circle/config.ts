@@ -5,9 +5,9 @@
  * "2026-11-11T23:11:00-05:00". timeZone is the IANA zone used to print it.
  */
 export const innerCircleConfig = {
-  priceLabel: "$4.99/month",
+  priceLabel: "$4.99",
   /** Shown struck through beside the offer price. */
-  compareAtLabel: "$29.99/month",
+  compareAtLabel: "$29.99",
   savingsLabel: "$25",
   currency: "USD",
   checkoutUrl: "https://v2.stan.store/itsyunmei/itsyunmei_store/page/5465593",
