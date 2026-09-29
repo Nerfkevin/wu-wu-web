@@ -445,7 +445,7 @@ function MemberNotice() {
   const [index, setIndex] = useState(0);
 
   const nearest = (root: HTMLDivElement) => {
-    const cards = [...root.children] as HTMLElement[];
+    const cards = Array.from(root.children) as HTMLElement[];
     let closest = 0;
     let best = Infinity;
     cards.forEach((card, i) => {
